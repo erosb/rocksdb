@@ -2183,6 +2183,7 @@ ifeq ($(PLATFORM), OS_AIX)
 	ROCKSDBJNILIB = librocksdbjni-aix.so
 	EXTRACT_SOURCES = gunzip < TAR_GZ | tar xvf -
 	SNAPPY_MAKE_TARGET = libsnappy.la
+	SHA256_CMD = openssl sha256 -r
 endif
 ifeq ($(PLATFORM), OS_OPENBSD)
 	JAVA_INCLUDE = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/openbsd
