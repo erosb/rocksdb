@@ -1888,6 +1888,8 @@ endif
 	mkdir snappy-$(SNAPPY_VER)/build
 	cd snappy-$(SNAPPY_VER)/build && CFLAGS='${EXTRA_CFLAGS}' CXXFLAGS='${EXTRA_CXXFLAGS}' LDFLAGS='${EXTRA_LDFLAGS}' cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && $(MAKE) ${SNAPPY_MAKE_TARGET}
 	cp snappy-$(SNAPPY_VER)/build/libsnappy.a .
+else
+	cp ../prebuilt-deps/libsnappy.a .
 endif
 
 liblz4.a:
@@ -1906,6 +1908,7 @@ endif
 
 libzstd.a:
 	-rm -rf zstd-$(ZSTD_VER)
+ifeq (,$(wildcard ../prebuilt-deps/libzstd.a))
 ifeq (,$(wildcard ./zstd-$(ZSTD_VER).tar.gz))
 	curl --fail --output zstd-$(ZSTD_VER).tar.gz --location ${CURL_SSL_OPTS} ${ZSTD_DOWNLOAD_BASE}/v$(ZSTD_VER).tar.gz
 endif
@@ -1917,6 +1920,9 @@ endif
 	tar xvzf zstd-$(ZSTD_VER).tar.gz
 	cd zstd-$(ZSTD_VER)/lib && DESTDIR=. PREFIX= $(MAKE) CFLAGS='-fPIC -O2 ${EXTRA_CFLAGS}' install
 	cp zstd-$(ZSTD_VER)/lib/libzstd.a .
+else
+	cp ../prebuilt-deps/libzstd.a .
+endif
 
 # A version of each $(LIBOBJECTS) compiled with -fPIC and a fixed set of static compression libraries
 java_static_libobjects = $(patsubst %,jls/%,$(LIB_CC_OBJECTS))
