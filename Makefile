@@ -1876,13 +1876,17 @@ endif
 libsnappy.a:
 	-rm -rf snappy-$(SNAPPY_VER)
 ifeq (,$(wildcard ./snappy-$(SNAPPY_VER).tar.gz))
+ifeq (,$(wildcard ../prepared-sources/snappy-$(SNAPPY_VER)))
 	curl --fail --output snappy-$(SNAPPY_VER).tar.gz --location ${CURL_SSL_OPTS} ${SNAPPY_DOWNLOAD_BASE}/$(SNAPPY_VER).tar.gz
 	SNAPPY_SHA256_ACTUAL=`$(SHA256_CMD) snappy-$(SNAPPY_VER).tar.gz | cut -d ' ' -f 1`; \
-    	if [ "$(SNAPPY_SHA256)" != "$$SNAPPY_SHA256_ACTUAL" ]; then \
-    		echo snappy-$(SNAPPY_VER).tar.gz checksum mismatch, expected=\"$(SNAPPY_SHA256)\" actual=\"$$SNAPPY_SHA256_ACTUAL\"; \
-    		exit 1; \
-    	fi
+    if [ "$(SNAPPY_SHA256)" != "$$SNAPPY_SHA256_ACTUAL" ]; then \
+		echo snappy-$(SNAPPY_VER).tar.gz checksum mismatch, expected=\"$(SNAPPY_SHA256)\" actual=\"$$SNAPPY_SHA256_ACTUAL\"; \
+		exit 1; \
+	fi
 	tar xvzf snappy-$(SNAPPY_VER).tar.gz
+else
+	cp -r ../prepared-sources/snappy-$(SNAPPY_VER) .
+endif
 endif
 ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
 	mkdir snappy-$(SNAPPY_VER)/build
