@@ -1875,7 +1875,7 @@ endif
 
 libsnappy.a:
 	-rm -rf snappy-$(SNAPPY_VER)
-ifeq (,$(wildcard libsnappy.a))
+ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
 ifeq (,$(wildcard ./snappy-$(SNAPPY_VER).tar.gz))
 	curl --fail --output snappy-$(SNAPPY_VER).tar.gz --location ${CURL_SSL_OPTS} ${SNAPPY_DOWNLOAD_BASE}/$(SNAPPY_VER).tar.gz
 endif
