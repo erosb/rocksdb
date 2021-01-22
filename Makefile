@@ -2141,19 +2141,29 @@ libbz2.a: bzip2-$(BZIP2_VER).tar.gz
 	cp bzip2-$(BZIP2_VER)/libbz2.a .
 
 snappy-$(SNAPPY_VER).tar.gz:
+ifeq (,$(wildcard ./snappy-$(SNAPPY_VER).tar.gz))
+ifeq (,$(wildcard ../prepared-sources/snappy-$(SNAPPY_VER)))
 	curl --fail --output snappy-$(SNAPPY_VER).tar.gz --location ${CURL_SSL_OPTS} ${SNAPPY_DOWNLOAD_BASE}/$(SNAPPY_VER).tar.gz
 	SNAPPY_SHA256_ACTUAL=`$(SHA256_CMD) snappy-$(SNAPPY_VER).tar.gz | cut -d ' ' -f 1`; \
-	if [ "$(SNAPPY_SHA256)" != "$$SNAPPY_SHA256_ACTUAL" ]; then \
+    if [ "$(SNAPPY_SHA256)" != "$$SNAPPY_SHA256_ACTUAL" ]; then \
 		echo snappy-$(SNAPPY_VER).tar.gz checksum mismatch, expected=\"$(SNAPPY_SHA256)\" actual=\"$$SNAPPY_SHA256_ACTUAL\"; \
 		exit 1; \
 	fi
-
+	tar xvzf snappy-$(SNAPPY_VER).tar.gz
+else
+	cp -r ../prepared-sources/snappy-$(SNAPPY_VER) .
+endif
+endif
+	
 libsnappy.a: snappy-$(SNAPPY_VER).tar.gz
 	-rm -rf snappy-$(SNAPPY_VER)
-	tar xvzf snappy-$(SNAPPY_VER).tar.gz
+ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
 	mkdir snappy-$(SNAPPY_VER)/build
 	cd snappy-$(SNAPPY_VER)/build && CFLAGS='${EXTRA_CFLAGS}' CXXFLAGS='${EXTRA_CXXFLAGS}' LDFLAGS='${EXTRA_LDFLAGS}' cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && $(MAKE) ${SNAPPY_MAKE_TARGET}
 	cp snappy-$(SNAPPY_VER)/build/libsnappy.a .
+else
+	cp ../prebuilt-deps/libsnappy.a .
+endif
 
 lz4-$(LZ4_VER).tar.gz:
 	curl --fail --output lz4-$(LZ4_VER).tar.gz --location ${CURL_SSL_OPTS} ${LZ4_DOWNLOAD_BASE}/v$(LZ4_VER).tar.gz
