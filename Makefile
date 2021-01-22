@@ -2141,6 +2141,7 @@ libbz2.a: bzip2-$(BZIP2_VER).tar.gz
 	cp bzip2-$(BZIP2_VER)/libbz2.a .
 
 snappy-$(SNAPPY_VER).tar.gz:
+	rm -rf snappy-$(SNAPPY_VER)
 ifeq (,$(wildcard ./snappy-$(SNAPPY_VER).tar.gz))
 ifeq (,$(wildcard ../prepared-sources/snappy-$(SNAPPY_VER)))
 	curl --fail --output snappy-$(SNAPPY_VER).tar.gz --location ${CURL_SSL_OPTS} ${SNAPPY_DOWNLOAD_BASE}/$(SNAPPY_VER).tar.gz
@@ -2156,7 +2157,6 @@ endif
 endif
 	
 libsnappy.a: snappy-$(SNAPPY_VER).tar.gz
-	-rm -rf snappy-$(SNAPPY_VER)
 ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
 	mkdir snappy-$(SNAPPY_VER)/build
 	cd snappy-$(SNAPPY_VER)/build && CFLAGS='${EXTRA_CFLAGS}' CXXFLAGS='${EXTRA_CXXFLAGS}' LDFLAGS='${EXTRA_LDFLAGS}' cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && $(MAKE) ${SNAPPY_MAKE_TARGET}
