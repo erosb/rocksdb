@@ -2190,7 +2190,7 @@ zstd-$(ZSTD_VER).tar.gz:
 libzstd.a: zstd-$(ZSTD_VER).tar.gz
 	-rm -rf zstd-$(ZSTD_VER)
 	tar xvzf zstd-$(ZSTD_VER).tar.gz
-	cd zstd-$(ZSTD_VER)/lib && DESTDIR=. PREFIX= $(MAKE) CFLAGS='-fPIC -O2 ${EXTRA_CFLAGS}' install
+	cd zstd-$(ZSTD_VER)/lib && DESTDIR=. PREFIX= $(MAKE) CFLAGS='-fPIC -O2 ${EXTRA_CFLAGS}' lib-release
 	cp zstd-$(ZSTD_VER)/lib/libzstd.a .
 
 # A version of each $(LIB_OBJECTS) compiled with -fPIC and a fixed set of static compression libraries
