@@ -453,7 +453,7 @@ uint32_t ExtendPPCImpl(uint32_t crc, const char *buf, size_t size) {
   return crc32c_ppc(crc, (const unsigned char *)buf, size);
 }
 
-#if __linux__
+#if __linux__ or defined(HAVE_POWER8)
 static int arch_ppc_probe(void) {
   arch_ppc_crc32 = 0;
 

@@ -24,7 +24,7 @@
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
-#if defined(OS_LINUX) || defined(OS_SOLARIS) || defined(OS_ANDROID)
+#if defined(OS_LINUX) || defined(OS_SOLARIS) || defined(OS_ANDROID) || defined(OS_AIX)
 #include <sys/statfs.h>
 #include <sys/sysmacros.h>
 #endif
