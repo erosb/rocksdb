@@ -6,8 +6,8 @@
 //  COPYING file in the root directory) and Apache 2.0 License
 //  (found in the LICENSE.Apache file in the root directory).
 
-#include "util/ppc-asm.h"
-#include "util/ppc-opcode.h"
+#include <ppc-asm.h>
+#include "ppc-opcode.h"
 
 #undef toc
 
