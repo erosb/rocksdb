@@ -2158,6 +2158,7 @@ endif
 	
 libsnappy.a: snappy-$(SNAPPY_VER).tar.gz
 #ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
+	rm -r snappy-$(SNAPPY_VER)/build
 	mkdir snappy-$(SNAPPY_VER)/build
 	cd snappy-$(SNAPPY_VER)/build && CFLAGS='${EXTRA_CFLAGS}' CXXFLAGS='${EXTRA_CXXFLAGS}' LDFLAGS='${EXTRA_LDFLAGS}' cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && $(MAKE) ${SNAPPY_MAKE_TARGET}
 	cp snappy-$(SNAPPY_VER)/build/libsnappy.a .
