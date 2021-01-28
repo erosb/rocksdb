@@ -22,7 +22,7 @@ static unsigned int crc32_align(unsigned int crc, unsigned char const *p,
 }
 #endif
 
-#ifdef HAVE_POWER8
+#ifdef NEVER
 unsigned int __crc32_vpmsum(unsigned int crc, unsigned char const *p,
                             unsigned long len);
 

@@ -2365,7 +2365,8 @@ IOSVERSION=$(shell defaults read $(PLATFORMSROOT)/iPhoneOS.platform/version CFBu
 	lipo ios-x86/$@ ios-arm/$@ -create -output $@
 
 else
-ifeq ($(HAVE_POWER8),1)
+ifdef NEVER
+# ifeq ($(HAVE_POWER8),1)
 $(OBJ_DIR)/util/crc32c_ppc.o: util/crc32c_ppc.c
 	$(AM_V_CC)$(CC) $(CFLAGS) -c $< -o $@
 
