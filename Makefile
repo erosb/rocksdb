@@ -2157,14 +2157,14 @@ endif
 endif
 	
 libsnappy.a: snappy-$(SNAPPY_VER).tar.gz
-#ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
+ifeq (,$(wildcard ../prebuilt-deps/libsnappy.a))
 	rm -r snappy-$(SNAPPY_VER)/build
 	mkdir snappy-$(SNAPPY_VER)/build
 	cd snappy-$(SNAPPY_VER)/build && CFLAGS='${EXTRA_CFLAGS}' CXXFLAGS='${EXTRA_CXXFLAGS}' LDFLAGS='${EXTRA_LDFLAGS}' cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && $(MAKE) ${SNAPPY_MAKE_TARGET}
 	cp snappy-$(SNAPPY_VER)/build/libsnappy.a .
-#else
-#	cp ../prebuilt-deps/libsnappy.a .
-#endif
+else
+	cp ../prebuilt-deps/libsnappy.a .
+endif
 
 lz4-$(LZ4_VER).tar.gz:
 	curl --fail --output lz4-$(LZ4_VER).tar.gz --location ${CURL_SSL_OPTS} ${LZ4_DOWNLOAD_BASE}/v$(LZ4_VER).tar.gz
